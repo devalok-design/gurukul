@@ -7,13 +7,19 @@ const guides = (await getCollection('guides', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 <BaseLayout title="Gurukul" description="Practical knowledge from the Devalok studio — for founders, designers, and builders.">
-  <div class="max-w-article mx-auto px-ds-06 pt-ds-12 pb-ds-10">
-    <p class="text-ds-lg text-surface-fg-muted leading-ds-relaxed">
-      Practical knowledge from the Devalok studio — for founders, designers, and builders.
-    </p>
-    <div class="mt-ds-10">
+  <div class="max-w-page mx-auto px-ds-06">
+
+    <!-- Hero — generous vertical space, clear purpose -->
+    <div class="max-w-article pt-ds-13 pb-ds-10 border-b border-surface-border-subtle">
+      <p class="text-ds-xl sm:text-ds-2xl text-surface-fg-muted leading-ds-relaxed max-w-[600px]">
+        Practical knowledge from the Devalok studio — for founders, designers, and builders.
+      </p>
+    </div>
+
+    <!-- Guide listing -->
+    <div class="max-w-article">
       {guides.length === 0 && (
-        <p class="text-surface-fg-subtle text-ds-md">Guides coming soon.</p>
+        <p class="py-ds-13 text-surface-fg-subtle text-ds-lg">Guides coming soon.</p>
       )}
       {guides.map((guide) => (
         <GuideEntry
@@ -23,6 +29,7 @@ const guides = (await getCollection('guides', ({ data }) => !data.draft))
           date={guide.data.date}
           readTime={guide.data.readTime}
           slug={guide.id}
+          tags={guide.data.tags}
         />
       ))}
     </div>

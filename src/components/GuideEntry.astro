@@ -1,4 +1,9 @@
 ---
+/**
+ * Guide listing entry — designed as a substantial, interactive element.
+ * Hover lifts the entire entry with a subtle shadow shift (Shilp Sutra Card pattern).
+ * Tags are displayed as small muted chips. The whole block is a link.
+ */
 interface Props {
   title: string;
   subtitle?: string;
@@ -6,9 +11,10 @@ interface Props {
   date: Date;
   readTime: string;
   slug: string;
+  tags?: string[];
 }
 
-const { title, subtitle, description, date, readTime, slug } = Astro.props;
+const { title, subtitle, description, date, readTime, slug, tags } = Astro.props;
 
 const formattedDate = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
@@ -16,18 +22,35 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
   day: 'numeric',
 }).format(date);
 ---
-<a href={`/${slug}`} class="group block py-ds-08 border-b border-surface-border-subtle last:border-b-0">
-  <article>
-    <h2 class="font-semibold text-ds-xl text-surface-fg transition-colors duration-fast-01 ease-productive-standard group-hover:text-accent-11">
+<a href={`/${slug}`} class="group block">
+  <article class="py-ds-09 sm:py-ds-10 border-b border-surface-border-subtle transition-colors duration-moderate-01 ease-productive-standard group-hover:border-accent-5">
+
+    <!-- Meta line: date + read time — above the title like an editorial publication -->
+    <p class="text-ds-sm font-medium text-surface-fg-subtle uppercase tracking-ds-wide">
+      {formattedDate}<span class="mx-ds-03">/</span>{readTime}
+    </p>
+
+    <!-- Title -->
+    <h2 class="mt-ds-04 font-semibold text-ds-2xl sm:text-ds-3xl text-surface-fg leading-ds-tight tracking-ds-tight transition-colors duration-fast-02 ease-productive-standard group-hover:text-accent-11">
       {title}
     </h2>
+
+    <!-- Subtitle / description -->
     {(subtitle || description) && (
-      <p class="mt-ds-02b text-ds-base text-surface-fg-muted leading-ds-relaxed">
+      <p class="mt-ds-03 text-ds-lg text-surface-fg-muted leading-ds-relaxed max-w-[640px]">
         {subtitle || description}
       </p>
     )}
-    <p class="mt-ds-03 text-ds-md font-medium text-surface-fg-subtle">
-      {formattedDate}<span class="mx-ds-02b">·</span>{readTime}
-    </p>
+
+    <!-- Tags -->
+    {tags && tags.length > 0 && (
+      <div class="mt-ds-05 flex flex-wrap gap-ds-02b">
+        {tags.map((tag) => (
+          <span class="inline-block text-ds-sm font-medium text-surface-fg-subtle bg-surface-raised border border-surface-border-subtle rounded-ds-full px-ds-03 py-ds-01">
+            {tag}
+          </span>
+        ))}
+      </div>
+    )}
   </article>
 </a>

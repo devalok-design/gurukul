@@ -48,41 +48,64 @@ const jsonLd = {
 >
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} slot="head" />
 
-  <div class="max-w-page mx-auto px-ds-06 pt-ds-08 pb-ds-13">
-    <a
-      href="/"
-      class="inline-flex items-center gap-ds-02 text-ds-md font-medium text-accent-11 underline decoration-transparent underline-offset-2 hover:decoration-current transition-[text-decoration-color] duration-fast-01 ease-productive-standard"
-    >
-      &larr; Back to Gurukul
-    </a>
+  <div class="max-w-page mx-auto px-ds-06">
 
-    <header class="mt-ds-08 max-w-article">
-      <h1 class="font-bold text-ds-4xl text-surface-fg leading-ds-tight tracking-ds-tight">
+    <!-- Article header — cinematic, generous, editorial -->
+    <header class="max-w-article pt-ds-10 pb-ds-10 border-b border-surface-border-subtle">
+
+      <!-- Back link — subtle, doesn't compete with the title -->
+      <a
+        href="/"
+        class="inline-block text-ds-sm font-medium text-surface-fg-subtle uppercase tracking-ds-wide hover:text-accent-11 transition-colors duration-fast-01 ease-productive-standard"
+      >
+        &larr; Gurukul
+      </a>
+
+      <!-- Title area — big, bold, breathing -->
+      <h1 class="mt-ds-08 font-bold text-ds-4xl sm:text-ds-5xl text-surface-fg leading-ds-tight tracking-ds-tight">
         {guide.data.title}
       </h1>
+
       {guide.data.subtitle && (
-        <p class="mt-ds-04 text-ds-xl text-surface-fg-muted leading-ds-relaxed">
+        <p class="mt-ds-05 text-ds-xl sm:text-ds-2xl text-surface-fg-muted leading-ds-relaxed">
           {guide.data.subtitle}
         </p>
       )}
-      <p class="mt-ds-05 text-ds-md font-medium text-surface-fg-subtle">
-        {guide.data.author}
+
+      <!-- Author + meta — separated from title with space, editorial treatment -->
+      <div class="mt-ds-08 flex flex-wrap items-center gap-x-ds-03 gap-y-ds-02 text-ds-md text-surface-fg-subtle">
+        <span class="font-semibold text-surface-fg">{guide.data.author}</span>
         {guide.data.authorRole && (
-          <span> &middot; {guide.data.authorRole}</span>
+          <>
+            <span class="text-surface-border-strong">/</span>
+            <span>{guide.data.authorRole}</span>
+          </>
         )}
-        <span class="mx-ds-02b">&middot;</span>
-        {formattedDate}
-        <span class="mx-ds-02b">&middot;</span>
-        {guide.data.readTime}
-      </p>
-      <div class="mt-ds-06 h-[1px] bg-surface-border-subtle"></div>
+        <span class="text-surface-border-strong">/</span>
+        <span>{formattedDate}</span>
+        <span class="text-surface-border-strong">/</span>
+        <span>{guide.data.readTime}</span>
+      </div>
+
+      <!-- Tags -->
+      {guide.data.tags && guide.data.tags.length > 0 && (
+        <div class="mt-ds-05 flex flex-wrap gap-ds-02b">
+          {guide.data.tags.map((tag: string) => (
+            <span class="inline-block text-ds-sm font-medium text-surface-fg-subtle bg-surface-raised border border-surface-border-subtle rounded-ds-full px-ds-03 py-ds-01">
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
     </header>
 
-    <div class="mt-ds-08">
+    <!-- Content area -->
+    <div class="pt-ds-10">
+
       {/* Mobile ToC */}
       {tocHeadings.length > 0 && (
-        <details class="xl:hidden mb-ds-08 border border-surface-border-subtle rounded-ds-md">
-          <summary class="cursor-pointer px-ds-05 py-ds-04 text-ds-sm font-semibold text-surface-fg-subtle select-none">
+        <details class="xl:hidden mb-ds-10 max-w-article border border-surface-border-subtle rounded-ds-md">
+          <summary class="cursor-pointer px-ds-05 py-ds-04 text-ds-sm font-semibold text-surface-fg-subtle select-none uppercase tracking-ds-wide">
             Contents
           </summary>
           <ul class="px-ds-05 pb-ds-04 space-y-ds-02b">
@@ -103,7 +126,7 @@ const jsonLd = {
         </details>
       )}
 
-      <div class="flex gap-ds-10">
+      <div class="flex gap-ds-12">
         <article class="prose-gurukul max-w-article min-w-0 flex-1">
           <Content />
         </article>
@@ -113,13 +136,14 @@ const jsonLd = {
       </div>
     </div>
 
-    <div class="mt-ds-13 max-w-article">
-      <div class="h-[1px] bg-surface-border-subtle mb-ds-06"></div>
+    <!-- End of article -->
+    <div class="max-w-article py-ds-13">
+      <div class="h-[1px] bg-surface-border-subtle mb-ds-08"></div>
       <a
         href="/"
-        class="text-ds-md font-medium text-accent-11 underline decoration-transparent underline-offset-2 hover:decoration-current transition-[text-decoration-color] duration-fast-01 ease-productive-standard"
+        class="inline-block text-ds-md font-semibold text-accent-11 hover:text-accent-12 transition-colors duration-fast-01 ease-productive-standard"
       >
-        &larr; More guides
+        &larr; All guides
       </a>
     </div>
   </div>
