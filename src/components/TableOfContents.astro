@@ -1,0 +1,37 @@
+---
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: Heading[];
+}
+
+const { headings } = Astro.props;
+const tocHeadings = headings.filter(h => h.depth === 2 || h.depth === 3);
+---
+{tocHeadings.length > 0 && (
+  <nav aria-label="Table of contents">
+    <div class="sticky top-ds-10">
+      <p class="text-ds-sm font-semibold text-surface-fg-subtle uppercase tracking-ds-wider mb-ds-04">Contents</p>
+      <ul class="space-y-ds-02b">
+        {tocHeadings.map((h) => (
+          <li>
+            <a
+              href={`#${h.slug}`}
+              class:list={[
+                'block text-ds-sm leading-ds-relaxed transition-colors duration-fast-01 ease-productive-standard',
+                'text-surface-fg-subtle hover:text-accent-11',
+                h.depth === 3 && 'pl-ds-04',
+              ]}
+            >
+              {h.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </nav>
+)}

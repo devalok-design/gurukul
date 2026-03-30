@@ -1,0 +1,126 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const guides = await getCollection('guides');
+  return guides.map((guide) => ({
+    params: { slug: guide.id },
+    props: { guide },
+  }));
+}
+
+const { guide } = Astro.props;
+const { Content, headings } = await render(guide);
+
+const formattedDate = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+}).format(guide.data.date);
+
+const tocHeadings = headings.filter(h => h.depth === 2 || h.depth === 3);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: guide.data.title,
+  description: guide.data.description,
+  datePublished: guide.data.date.toISOString(),
+  ...(guide.data.updatedDate && { dateModified: guide.data.updatedDate.toISOString() }),
+  author: {
+    '@type': 'Person',
+    name: guide.data.author,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Devalok Design and Strategy Studio',
+    url: 'https://devalok.in',
+  },
+};
+---
+<BaseLayout
+  title={guide.data.title}
+  description={guide.data.description}
+  ogImage={guide.data.ogImage}
+  article={true}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} slot="head" />
+
+  <div class="max-w-page mx-auto px-ds-06 pt-ds-08 pb-ds-13">
+    <a
+      href="/"
+      class="inline-flex items-center gap-ds-02 text-ds-md font-medium text-accent-11 underline decoration-transparent underline-offset-2 hover:decoration-current transition-[text-decoration-color] duration-fast-01 ease-productive-standard"
+    >
+      &larr; Back to Gurukul
+    </a>
+
+    <header class="mt-ds-08 max-w-article">
+      <h1 class="font-bold text-ds-4xl text-surface-fg leading-ds-tight tracking-ds-tight">
+        {guide.data.title}
+      </h1>
+      {guide.data.subtitle && (
+        <p class="mt-ds-04 text-ds-xl text-surface-fg-muted leading-ds-relaxed">
+          {guide.data.subtitle}
+        </p>
+      )}
+      <p class="mt-ds-05 text-ds-md font-medium text-surface-fg-subtle">
+        {guide.data.author}
+        {guide.data.authorRole && (
+          <span> &middot; {guide.data.authorRole}</span>
+        )}
+        <span class="mx-ds-02b">&middot;</span>
+        {formattedDate}
+        <span class="mx-ds-02b">&middot;</span>
+        {guide.data.readTime}
+      </p>
+      <div class="mt-ds-06 h-[1px] bg-surface-border-subtle"></div>
+    </header>
+
+    <div class="mt-ds-08">
+      {/* Mobile ToC */}
+      {tocHeadings.length > 0 && (
+        <details class="xl:hidden mb-ds-08 border border-surface-border-subtle rounded-ds-md">
+          <summary class="cursor-pointer px-ds-05 py-ds-04 text-ds-sm font-semibold text-surface-fg-subtle select-none">
+            Contents
+          </summary>
+          <ul class="px-ds-05 pb-ds-04 space-y-ds-02b">
+            {tocHeadings.map((h) => (
+              <li>
+                <a
+                  href={`#${h.slug}`}
+                  class:list={[
+                    'block text-ds-sm leading-ds-relaxed text-surface-fg-subtle hover:text-accent-11 transition-colors duration-fast-01 ease-productive-standard',
+                    h.depth === 3 && 'pl-ds-04',
+                  ]}
+                >
+                  {h.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </details>
+      )}
+
+      <div class="flex gap-ds-10">
+        <article class="prose-gurukul max-w-article min-w-0 flex-1">
+          <Content />
+        </article>
+        <aside class="w-56 shrink-0 hidden xl:block">
+          <TableOfContents headings={headings} />
+        </aside>
+      </div>
+    </div>
+
+    <div class="mt-ds-13 max-w-article">
+      <div class="h-[1px] bg-surface-border-subtle mb-ds-06"></div>
+      <a
+        href="/"
+        class="text-ds-md font-medium text-accent-11 underline decoration-transparent underline-offset-2 hover:decoration-current transition-[text-decoration-color] duration-fast-01 ease-productive-standard"
+      >
+        &larr; More guides
+      </a>
+    </div>
+  </div>
+</BaseLayout>
