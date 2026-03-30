@@ -1,11 +1,30 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import GuideEntry from '../components/GuideEntry.astro';
+import { getCollection } from 'astro:content';
+
+const guides = (await getCollection('guides', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 <BaseLayout title="Gurukul" description="Practical knowledge from the Devalok studio — for founders, designers, and builders.">
   <div class="max-w-article mx-auto px-ds-06 pt-ds-12 pb-ds-10">
     <p class="text-ds-lg text-surface-fg-muted leading-ds-relaxed">
       Practical knowledge from the Devalok studio — for founders, designers, and builders.
     </p>
-    <p class="mt-ds-08 text-surface-fg-subtle text-ds-md">Guides coming soon.</p>
+    <div class="mt-ds-10">
+      {guides.length === 0 && (
+        <p class="text-surface-fg-subtle text-ds-md">Guides coming soon.</p>
+      )}
+      {guides.map((guide) => (
+        <GuideEntry
+          title={guide.data.title}
+          subtitle={guide.data.subtitle}
+          description={guide.data.description}
+          date={guide.data.date}
+          readTime={guide.data.readTime}
+          slug={guide.id}
+        />
+      ))}
+    </div>
   </div>
 </BaseLayout>
