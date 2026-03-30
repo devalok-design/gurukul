@@ -1,0 +1,74 @@
+---
+/**
+ * Custom GA4 events for Gurukul.
+ * Tracks meaningful interactions, not vanity metrics.
+ *
+ * Events:
+ * - sankalan_cta_click: user clicked the Sankalan subscribe CTA
+ * - toc_click: user clicked a table of contents link (label = heading text)
+ * - guide_scroll_25/50/75/100: scroll depth milestones on guide pages
+ */
+---
+<script is:inline>
+(function() {
+  if (typeof gtag !== 'function') return;
+
+  // ── Sankalan CTA clicks ──
+  document.querySelectorAll('a[href*="dvlk.in/sankalan"]').forEach(function(el) {
+    el.addEventListener('click', function() {
+      gtag('event', 'sankalan_cta_click', {
+        event_category: 'engagement',
+        event_label: el.closest('.prose-gurukul') ? 'in_article' : 'standalone'
+      });
+    });
+  });
+
+  // ── Table of Contents clicks ──
+  document.querySelectorAll('nav[aria-label="Table of contents"] a, details ul a[href^="#"]').forEach(function(el) {
+    el.addEventListener('click', function() {
+      gtag('event', 'toc_click', {
+        event_category: 'navigation',
+        event_label: el.textContent.trim()
+      });
+    });
+  });
+
+  // ── Scroll depth on guide pages ──
+  var article = document.querySelector('.prose-gurukul');
+  if (article) {
+    var fired = {};
+    var thresholds = [25, 50, 75, 100];
+
+    function checkScroll() {
+      var rect = article.getBoundingClientRect();
+      var articleTop = rect.top + window.scrollY;
+      var articleHeight = rect.height;
+      var scrollPos = window.scrollY + window.innerHeight - articleTop;
+      var pct = Math.round((scrollPos / articleHeight) * 100);
+
+      thresholds.forEach(function(t) {
+        if (pct >= t && !fired[t]) {
+          fired[t] = true;
+          gtag('event', 'guide_scroll_' + t, {
+            event_category: 'engagement',
+            event_label: document.title
+          });
+        }
+      });
+    }
+
+    var ticking = false;
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        requestAnimationFrame(function() {
+          checkScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    checkScroll();
+  }
+})();
+</script>
