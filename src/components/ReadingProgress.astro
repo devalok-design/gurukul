@@ -1,0 +1,35 @@
+---
+/**
+ * Thin reading progress bar — fixed at the very top of the viewport.
+ * Only renders on article pages (where .prose-gurukul exists).
+ * Accent-9 at 70% opacity. Disappears when not on an article.
+ */
+---
+<div id="reading-progress" class="fixed top-0 left-0 h-[2px] bg-accent-9 opacity-70 z-[60] transition-[width] duration-[50ms] ease-linear" style="width: 0%" aria-hidden="true"></div>
+
+<script is:inline>
+(function() {
+  var bar = document.getElementById('reading-progress');
+  var article = document.querySelector('.prose-gurukul');
+  if (!bar || !article) { if (bar) bar.style.display = 'none'; return; }
+
+  var ticking = false;
+  function update() {
+    var rect = article.getBoundingClientRect();
+    var articleTop = rect.top + window.scrollY;
+    var articleHeight = rect.height;
+    var scrolled = window.scrollY - articleTop + window.innerHeight * 0.3;
+    var pct = Math.min(100, Math.max(0, (scrolled / articleHeight) * 100));
+    bar.style.width = pct + '%';
+  }
+
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() { update(); ticking = false; });
+      ticking = true;
+    }
+  }, { passive: true });
+
+  update();
+})();
+</script>

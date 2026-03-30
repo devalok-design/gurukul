@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ChakraSvg from '../components/ChakraSvg.astro';
+---
+<BaseLayout title="Not Found" description="This page doesn't exist.">
+  <div class="max-w-article mx-auto px-ds-06 py-ds-13 text-center stagger-children">
+    <ChakraSvg size={40} class="text-accent-9 opacity-30 mx-auto" />
+    <h1 class="mt-ds-06 font-bold text-ds-4xl text-surface-fg leading-ds-tight">Page not found</h1>
+    <p class="mt-ds-03 text-ds-lg text-surface-fg-muted">This page doesn't exist, or it was moved.</p>
+    <a
+      href="/"
+      class="inline-block mt-ds-08 text-ds-md font-semibold text-accent-11 hover:text-accent-12 transition-colors duration-fast-01 ease-productive-standard"
+    >
+      &larr; Back to Gurukul
+    </a>
+  </div>
+</BaseLayout>

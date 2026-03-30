@@ -15,11 +15,13 @@ export async function getStaticPaths() {
 const { guide } = Astro.props;
 const { Content, headings } = await render(guide);
 
-const formattedDate = new Intl.DateTimeFormat('en-US', {
+const dateFormatter = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
   month: 'long',
   day: 'numeric',
-}).format(guide.data.date);
+});
+const formattedDate = dateFormatter.format(guide.data.date);
+const formattedUpdatedDate = guide.data.updatedDate ? dateFormatter.format(guide.data.updatedDate) : null;
 
 const tocHeadings = headings.filter(h => h.depth === 2 || h.depth === 3);
 
@@ -84,6 +86,9 @@ const jsonLd = {
         )}
         <span class="text-surface-border-strong">/</span>
         <span>{formattedDate}</span>
+        {formattedUpdatedDate && (
+          <span class="text-surface-fg-subtle"> · Updated {formattedUpdatedDate}</span>
+        )}
         <span class="text-surface-border-strong">/</span>
         <span>{guide.data.readTime}</span>
       </div>
