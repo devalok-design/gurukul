@@ -5,6 +5,7 @@
 @import '../../node_modules/@devalok/shilp-sutra/dist/tokens/primitives.css';
 @import '../../node_modules/@devalok/shilp-sutra/dist/tokens/semantic.css';
 @import '../../node_modules/@devalok/shilp-sutra/dist/tokens/typography-semantic.css';
+@import './prose.css';
 
 @tailwind base;
 @tailwind components;
