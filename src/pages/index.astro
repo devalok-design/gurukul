@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import GuideEntry from '../components/GuideEntry.astro';
+import ChakraSvg from '../components/ChakraSvg.astro';
 import { getCollection } from 'astro:content';
 
 const guides = (await getCollection('guides', ({ data }) => !data.draft))
@@ -9,8 +10,14 @@ const guides = (await getCollection('guides', ({ data }) => !data.draft))
 <BaseLayout title="Gurukul" description="Practical knowledge from the Devalok studio — for founders, designers, and builders.">
   <div class="max-w-page mx-auto px-ds-06">
 
-    <!-- Hero — generous vertical space, clear purpose -->
-    <div class="max-w-article pt-ds-13 pb-ds-10 border-b border-surface-border-subtle animate-fade-up">
+    <!-- Hero — identity + purpose -->
+    <div class="max-w-article pt-ds-12 pb-ds-10 border-b border-surface-border-subtle animate-fade-up">
+      <div class="flex items-center gap-ds-03 mb-ds-06">
+        <ChakraSvg size={32} class="text-accent-9" />
+        <span class="font-bold text-ds-3xl text-surface-fg leading-none">गुरुकुल</span>
+        <span class="font-medium text-ds-lg text-surface-fg-subtle leading-none hidden sm:inline">Gurukul</span>
+        <span class="ml-ds-02 inline-flex items-center text-[10px] font-semibold uppercase tracking-ds-widest text-accent-9 bg-accent-2 border border-accent-5 rounded-ds-full px-ds-02b py-[1px] leading-none">Alpha</span>
+      </div>
       <p class="text-ds-xl sm:text-ds-2xl text-surface-fg-muted leading-ds-relaxed max-w-[600px]">
         Practical knowledge from the Devalok studio — for founders, designers, and builders.
       </p>
