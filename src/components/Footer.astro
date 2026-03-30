@@ -1,0 +1,16 @@
+---
+import ChakraSvg from './ChakraSvg.astro';
+---
+<footer class="relative mt-ds-13 border-t border-surface-border-subtle">
+  <div
+    class="absolute inset-0 pointer-events-none opacity-[0.06]"
+    style="background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.45' numOctaves='3' seed='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E&quot;); background-size: 100px 100px; filter: contrast(250%) brightness(105%);"
+    aria-hidden="true"
+  ></div>
+  <div class="relative max-w-page mx-auto px-ds-06 py-ds-10 flex flex-col items-center gap-ds-04 text-center">
+    <p class="text-ds-md text-surface-fg-subtle">
+      A <a href="https://devalok.in" class="text-accent-11 underline decoration-transparent hover:decoration-current underline-offset-2 transition-[color,text-decoration-color] duration-fast-01 ease-productive-standard hover:text-accent-12">Devalok</a> initiative
+    </p>
+    <ChakraSvg size={20} class="text-accent-9 opacity-40" />
+  </div>
+</footer>

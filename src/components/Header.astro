@@ -1,0 +1,18 @@
+---
+import ChakraSvg from './ChakraSvg.astro';
+---
+<header class="w-full border-b border-surface-border-subtle">
+  <div class="max-w-page mx-auto flex items-center justify-between px-ds-06 py-ds-05">
+    <a href="/" class="flex items-center gap-ds-03 group">
+      <ChakraSvg size={28} class="text-accent-9 transition-transform duration-moderate-01 ease-productive-standard group-hover:rotate-[15deg]" />
+      <span class="font-bold text-ds-xl text-surface-fg leading-none">गुरुकुल</span>
+      <span class="font-medium text-ds-md text-surface-fg-subtle leading-none hidden sm:inline">Gurukul</span>
+    </a>
+    <a
+      href="/about"
+      class="text-ds-md font-medium text-surface-fg-subtle transition-colors duration-fast-01 ease-productive-standard hover:text-surface-fg"
+    >
+      About
+    </a>
+  </div>
+</header>
