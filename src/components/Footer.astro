@@ -1,16 +1,69 @@
 ---
 import ChakraSvg from './ChakraSvg.astro';
+
+const devalokGrain = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.45' numOctaves='3' seed='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E")`;
 ---
 <footer class="relative mt-ds-13 border-t border-surface-border-subtle">
+  <!-- Grain texture -->
   <div
-    class="absolute inset-0 pointer-events-none opacity-[0.06]"
-    style="background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.45' numOctaves='3' seed='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E&quot;); background-size: 100px 100px; filter: contrast(250%) brightness(105%);"
+    class="absolute inset-0 pointer-events-none opacity-[0.05]"
+    style={`background-image: ${devalokGrain}; background-size: 100px 100px; filter: contrast(250%) brightness(105%);`}
     aria-hidden="true"
   ></div>
-  <div class="relative max-w-page mx-auto px-ds-06 py-ds-10 flex flex-col items-center gap-ds-04 text-center">
-    <p class="text-ds-md text-surface-fg-subtle">
-      A <a href="https://devalok.in" class="text-accent-11 underline decoration-transparent hover:decoration-current underline-offset-2 transition-[color,text-decoration-color] duration-fast-01 ease-productive-standard hover:text-accent-12">Devalok</a> initiative
-    </p>
-    <ChakraSvg size={20} class="text-accent-9 opacity-40" />
+
+  <div class="relative max-w-page mx-auto px-ds-06 pt-ds-10 pb-ds-08">
+    <!-- Top section: Gurukul description + link columns -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-ds-10 lg:gap-ds-08">
+
+      <!-- About blurb -->
+      <div class="sm:col-span-2 lg:col-span-1">
+        <div class="flex items-center gap-ds-02b mb-ds-04">
+          <ChakraSvg size={20} class="text-accent-9" />
+          <span class="font-semibold text-ds-base text-surface-fg">गुरुकुल</span>
+        </div>
+        <p class="text-ds-md text-surface-fg-muted leading-ds-relaxed max-w-[280px]">
+          Practical knowledge from the Devalok studio — for founders, designers, and builders.
+        </p>
+      </div>
+
+      <!-- Gurukul links -->
+      <div>
+        <p class="text-ds-sm font-semibold text-surface-fg-subtle uppercase tracking-ds-wider mb-ds-04">Gurukul</p>
+        <ul class="space-y-ds-03">
+          <li><a href="/" class="text-ds-md text-surface-fg-muted hover:text-accent-11 transition-colors duration-fast-01 ease-productive-standard">Guides</a></li>
+          <li><a href="/about" class="text-ds-md text-surface-fg-muted hover:text-accent-11 transition-colors duration-fast-01 ease-productive-standard">About</a></li>
+          <li><a href="/rss.xml" class="text-ds-md text-surface-fg-muted hover:text-accent-11 transition-colors duration-fast-01 ease-productive-standard">RSS Feed</a></li>
+        </ul>
+      </div>
+
+      <!-- Devalok links -->
+      <div>
+        <p class="text-ds-sm font-semibold text-surface-fg-subtle uppercase tracking-ds-wider mb-ds-04">Devalok</p>
+        <ul class="space-y-ds-03">
+          <li><a href="https://devalok.in" class="text-ds-md text-surface-fg-muted hover:text-accent-11 transition-colors duration-fast-01 ease-productive-standard">devalok.in</a></li>
+          <li><a href="https://devalok.in/works" class="text-ds-md text-surface-fg-muted hover:text-accent-11 transition-colors duration-fast-01 ease-productive-standard">Works</a></li>
+          <li><a href="https://devalok.in/#book-a-call" class="text-ds-md text-surface-fg-muted hover:text-accent-11 transition-colors duration-fast-01 ease-productive-standard">Book a Call</a></li>
+        </ul>
+      </div>
+
+      <!-- Info -->
+      <div>
+        <p class="text-ds-sm font-semibold text-surface-fg-subtle uppercase tracking-ds-wider mb-ds-04">Info</p>
+        <ul class="space-y-ds-03">
+          <li><span class="text-ds-md text-surface-fg-subtle">Lucknow, Bharat</span></li>
+          <li><span class="text-ds-md text-surface-fg-subtle">Phoenix, USA</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="mt-ds-10 pt-ds-06 border-t border-surface-border-subtle flex flex-col sm:flex-row items-center justify-between gap-ds-03">
+      <p class="text-ds-sm text-surface-fg-subtle">
+        &copy; {new Date().getFullYear()} Devalok Design and Strategy Studio Pvt. Ltd.
+      </p>
+      <p class="text-ds-sm italic text-accent-9 opacity-70">
+        Different by Design
+      </p>
+    </div>
   </div>
 </footer>
