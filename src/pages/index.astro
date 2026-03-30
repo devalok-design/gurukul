@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import GuideEntry from '../components/GuideEntry.astro';
+import SankalanCta from '../components/SankalanCta.astro';
 import ChakraSvg from '../components/ChakraSvg.astro';
 import { getCollection } from 'astro:content';
 
@@ -39,6 +40,11 @@ const guides = (await getCollection('guides', ({ data }) => !data.draft))
           tags={guide.data.tags}
         />
       ))}
+    </div>
+
+    <!-- Sankalan CTA -->
+    <div class="max-w-article mt-ds-12">
+      <SankalanCta />
     </div>
   </div>
 </BaseLayout>

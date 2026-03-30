@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TableOfContents from '../components/TableOfContents.astro';
+import SankalanCta from '../components/SankalanCta.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -136,9 +137,13 @@ const jsonLd = {
       </div>
     </div>
 
-    <!-- End of article -->
-    <div class="max-w-article py-ds-13">
-      <div class="h-[1px] bg-surface-border-subtle mb-ds-08"></div>
+    <!-- Sankalan CTA — the reader just finished, this is the moment -->
+    <div class="max-w-article mt-ds-13">
+      <SankalanCta />
+    </div>
+
+    <!-- Back to guides -->
+    <div class="max-w-article py-ds-10">
       <a
         href="/"
         class="inline-block text-ds-md font-semibold text-accent-11 hover:text-accent-12 transition-colors duration-fast-01 ease-productive-standard"
