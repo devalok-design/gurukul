@@ -10,14 +10,14 @@ const guides = (await getCollection('guides', ({ data }) => !data.draft))
   <div class="max-w-page mx-auto px-ds-06">
 
     <!-- Hero — generous vertical space, clear purpose -->
-    <div class="max-w-article pt-ds-13 pb-ds-10 border-b border-surface-border-subtle">
+    <div class="max-w-article pt-ds-13 pb-ds-10 border-b border-surface-border-subtle animate-fade-up">
       <p class="text-ds-xl sm:text-ds-2xl text-surface-fg-muted leading-ds-relaxed max-w-[600px]">
         Practical knowledge from the Devalok studio — for founders, designers, and builders.
       </p>
     </div>
 
     <!-- Guide listing -->
-    <div class="max-w-article">
+    <div class="max-w-article stagger-children">
       {guides.length === 0 && (
         <p class="py-ds-13 text-surface-fg-subtle text-ds-lg">Guides coming soon.</p>
       )}
