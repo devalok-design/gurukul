@@ -2,110 +2,149 @@
 title: "Non-dilutive Funding Guide"
 subtitle: "A practical guide to researching government grants, subsidies, and non-dilutive capital using AI"
 description: "Your startup doesn't always need VC funding. Here's how to find and stack government schemes that give you capital without giving away equity."
-author: "Mudit Baid"
+author: "Mudit Lal"
 authorRole: "Founder, Devalok Design and Strategy Studio"
 date: 2026-03-30
-readTime: "12 min read"
+readTime: "10 min read"
 tags: ["funding", "startups", "government-schemes", "ai-tools"]
-draft: false
 ---
 
-> **[PLACEHOLDER]** This guide contains sample content to demonstrate typography and layout. The actual guide will replace this content.
+## What is Non-dilutive Funding?
 
-## Why Non-dilutive Capital
+Money you get without giving away ownership of your company. No investors on your cap table, no board seats, no term sheets.
 
-Every founder who has raised venture capital knows the arithmetic: you trade ownership for speed. But **non-dilutive capital** — grants, subsidies, tax credits, and revenue-based financing — lets you fund operations without giving up a single percentage point of equity.
+This comes from governments, institutions, and programs that support businesses through grants (free money), subsidies (they cover a percentage of your costs), interest subventions (reduced loan interest), and reimbursement schemes (you spend, they pay back a portion).
 
-This matters more than most founders realize. A *seed-stage company* that secures $150K in government grants before raising a priced round enters that negotiation from a fundamentally different position. You're not desperate. You have runway. The terms you accept reflect that.
+Governments at every level have earmarked [thousands of crores](https://www.investindia.gov.in/team-india-blogs/indias-union-budget-fy-2025-26-key-takeaways) for this. The [Union Budget 2025-26 alone allocated ₹10,000 crore](https://www.businesstoday.in/latest/economy/story/budget-2025-26-govts-rs-30000-crore-bet-on-startups-deep-tech-could-reshape-indias-innovation-landscape-463074-2025-02-01) as a fresh Fund of Funds for Startups, and the [MSME Ministry received ₹23,168 crore](https://www.startupindia.gov.in/content/sih/en/home-page.html). The money exists. Finding and understanding the schemes has always been the hard part. That's what AI fixes, and that's what this guide covers.
 
-Non-dilutive funding isn't charity. Programs like `SBIR` and `STTR` in the United States, or the Startup India Seed Fund Scheme, exist because governments want innovation in their economies. You're not asking for a favor — you're applying for capital that was allocated specifically for companies like yours.
 
-The challenge isn't availability. It's **discovery and eligibility**. There are thousands of programs across federal, state, and local levels, each with different requirements, timelines, and application processes. That's where a systematic research approach — augmented by AI — changes the game.
+## Three Things I Didn't Know Before Running This Research
+
+I ran this exercise for Devalok and for one of our clients. These genuinely changed how I approach early-stage capital:
+
+**Your company has multiple identities in the eyes of the government.** Depending on how you write your [Detailed Project Report (DPR)](https://www.myscheme.gov.in/), the same business can qualify as a "tech startup" for one scheme, an "MSME" for another, a "services enterprise" for a third. Same entity, same team, same work. Different framing, different eligibility, different money. This was very true for Devalok because we do design, strategy, AND we're building tech products like Karm and Sarathi. Three different identities right there.
+
+**Schemes can be combined.** The government allows you to layer Central schemes on top of State schemes on the same project. Each one covers a different part of your cost structure.
+
+**The numbers are not small.** On one project we modeled, combining Central and UP state schemes on a ₹50 Lakh to ₹1 Crore investment mapped to ₹1.4 to 1.9 Crore in potential funding. More than the project cost. On a larger ₹10-15 Crore capex project, 35-50% could come back as grants and subsidies.
+
+
+## The Method
+
+This is the exact process I used. You can do this in a single sitting with any AI (I used [Claude](https://claude.ai), works with ChatGPT, Gemini, whatever).
+
+### Step 1: Give the AI Full Context About Your Business
+
+Here's roughly what I asked:
+
+> "Claude, What are some government schemes for startups or MSME or anything else that Devalok can get non-dilutive funding from (we are not open for giving away equity). You know all about Devalok - please figure out - do a research (both state and central level, we are incorporated out of Lucknow, Uttar Pradesh as Pvt. Ltd. with GST, UDYAM MSME and IEC)"
+
+If your AI doesn't already know about your company, give it the details:
+
+> - Company type: [Pvt. Ltd. / LLP / Proprietorship / Partnership]
+> - Incorporation state: [State, Country]
+> - Registrations you hold: [GST, [UDYAM MSME](https://udyamregistration.gov.in/), [DPIIT Startup Recognition](https://www.startupindia.gov.in/content/sih/en/startupgov/startup-recognition-page.html), IEC, etc.]
+> - Industry/sector: [What you actually do]
+> - What you're trying to fund: [Specific project, expansion, equipment, R&D, etc.]
+> - Approximate investment range: [How much you need]
+>
+> "Research both central/federal and state-level schemes. For each scheme, give me: the scheme name, what it provides, the maximum amount, eligibility criteria, and application deadlines."
+
+The more specific you are about your registrations and what you're funding, the better the output.
+
+### Step 2: Ask Which Ones Can Be Combined
+
+> "Which of these schemes can be combined on the same project? Are there any that explicitly conflict? Map out the maximum combined funding if we layer all compatible ones."
+
+AI cross-references eligibility criteria across 8-10 schemes in seconds. A consultant would take days for this.
+
+### Step 3: Explore Framing
+
+This was the part that surprised me most:
+
+> "Our company does [X]. Could we frame the same project differently for different schemes? For example, could the same project qualify as [industry A] for one scheme and [industry B] for another? What would the DPR framing look like for each?"
+
+A design studio is also a tech company, also an MSME, also potentially a training enterprise. A pet food company is also a food processing unit, also an animal feed manufacturer, also a startup. The label on your DPR determines eligibility. AI maps all the overlaps.
+
+### Step 4: Get the Timeline
+
+> "Create an action plan. What do we apply for first? Are there urgent deadlines? What documents and registrations do we need before we can apply?"
+
+During our research, we found one scheme ([AHIDF](https://ahidf.udyamimitra.in/)) with a deadline literally days away. Without the AI flagging it, we would have missed it entirely.
+
+### Step 5: Take It to Your CA
+
+AI does not replace your Chartered Accountant or subsidy consultant. Don't try to file DPRs based purely on AI output.
+
+What AI does is compress weeks of preliminary research into one session. You walk into your CA's office (or just WhatsApp them) already knowing which schemes to target, what the numbers look like, which ones combine, and what deadlines are coming.
+
+Your CA's job becomes preparing and filing applications, not spending the first three meetings explaining what schemes exist.
+
+If you're adept enough, you can use AI to draft first versions of your DPRs too. But get a professional to review before filing. Framing is everything.
+
+
+## Schemes Worth Knowing (India)
+
+Not exhaustive. These came up during our research. Your eligibility depends on your business type, state, and sector. Always verify on the official portals linked below.
+
+### Central Government
+
+**[Startup India Seed Fund (SISFS)](https://seedfund.startupindia.gov.in/):** Up to ₹20 Lakh equity-free grant for prototype/product development, plus up to ₹50 Lakh convertible debt for commercialization. Need [DPIIT recognition](https://www.startupindia.gov.in/content/sih/en/startupgov/startup-recognition-page.html), incorporated within 2 years. Administered through [approved incubators](https://seedfund.startupindia.gov.in/).
+
+**[PMFME](https://pmfme.mofpi.gov.in/):** 35% credit-linked capital subsidy, capped at ₹10 Lakh per unit. Works through the [One District One Product (ODOP)](https://www.india.gov.in/pm-formalisation-micro-food-processing-enterprises-pmfme-scheme) framework. Broader than the name suggests: "animal feed" is on the eligible list.
+
+**[AHIDF](https://dahd.gov.in/schemes/programmes/ahidf):** 3% interest subvention for 8 years on loans covering up to 90% of project cost. "Animal Feed Plant" explicitly listed. Fund size: ₹29,610 Crore. Apply at [ahidf.udyamimitra.in](https://ahidf.udyamimitra.in/).
+
+**[National Livestock Mission](https://dahd.gov.in/):** 50% capital subsidy, direct grant (not credit-linked), up to ₹50 Lakh. Closest thing to someone just handing you money.
+
+**[PMEGP](https://www.kviconline.gov.in/pmegpeportal/pmegphome/index.jsp):** 15-35% margin money subsidy for new manufacturing or service units. Up to ₹50 Lakh (manufacturing) or ₹20 Lakh (service). Administered by [KVIC](https://www.kviconline.gov.in/).
+
+### State Schemes (UP as Example)
+
+Every state has its own versions. Using UP because that's where Devalok is incorporated. Swap the state name in your prompt for yours.
+
+**UP Food Processing Industry Policy 2023:** 35% capital subsidy on plant, machinery, and technical civil work. Up to ₹10 Crore. In FY 2024-25, ₹85 Crore was allocated to 70 units.
+
+**UP MSME Promotion Policy 2022:** 10-25% capital subsidy on Fixed Capital Investment by region and size. Additional 2% for SC/ST and women entrepreneurs. Stamp duty exemption and interest subsidies on top.
+
+**[UP Startup Policy 2020](https://startinup.up.gov.in/):** Prototype grant up to ₹5 Lakh, seed capital/marketing up to ₹7.5 Lakh, patent filing reimbursement up to ₹10 Lakh (international). 50% boost for women/transgender co-founders with 26%+ equity.
+
+Maharashtra, Karnataka, Tamil Nadu, Telangana, Gujarat all have robust policies. Run the same process for your state.
+
+
+## Beyond India
+
+Same method, any country. Replace "Central and State" with "Federal and State" or "National and Regional" in your prompts.
+
+**United States:** [SBIR/STTR](https://www.sbir.gov/) grants for R&D (note: program authorization lapsed September 2025, check current status), state economic development grants, [SBA programs](https://www.sba.gov/), USDA grants for rural businesses.
+
+**European Union:** [Horizon Europe](https://research-and-innovation.ec.europa.eu/funding/funding-opportunities/funding-programmes-and-open-calls/horizon-europe_en), [European Innovation Council](https://eic.ec.europa.eu/), country-specific programs like Germany's [EXIST](https://www.exist.de/), France's [BPI France](https://www.bpifrance.fr/), UK's [Innovate UK](https://www.ukri.org/councils/innovate-uk/).
+
+**Southeast Asia:** Singapore's [Enterprise Development Grant](https://www.enterprisesg.gov.sg/financial-support/enterprise-development-grant), Malaysia's MTDC, various ASEAN programs.
+
+**Institutional:** Universities (ASU has programs, speaking from experience), accelerators, foundations, industry associations. Most founders never check.
+
+
+## The Honest Part
+
+**Government processes are slow sometimes.** Budget 3-6 months from application to disbursement. Sometimes longer.
+
+**The paperwork is real.** DPRs, compliance certificates, utilization reports. Not passive income.
+
+**How you frame the application matters more than what you're building sometimes.** A good CA who knows DPR writing is worth every rupee.
+
+**Not everything is a grant.** Some are credit-linked (loan first, subsidy back). Some are interest subventions. Some are reimbursements (spend first, claim later). Understand the mechanism before planning cash flow around it.
+
+**AI can get details wrong.** Always verify numbers, eligibility, and deadlines against official government portals. AI for discovery, primary sources for confirmation.
+
+But none of these are reasons to not do it. They're reasons to go in prepared. And now you know how to prepare.
+
+Focus on building the business. The money to support it might already be sitting in a government portal somewhere.
+
+Vijayi Bhava 🧡
 
 ---
 
-## Research Methodology
+*Written by Mudit Lal, Founder of Devalok Design and Strategy Studio. We're a design and strategy studio in Lucknow, India with operations in Phoenix, Arizona. We work with founder-led and growth-stage companies across brand, digital, and strategy.*
 
-The traditional approach to grant research is painful: hours of browsing government websites, downloading PDFs, and trying to parse eligibility criteria written in bureaucratic language. AI tools have compressed this process dramatically.
-
-### Government Grant Databases
-
-Start with the authoritative sources before reaching for AI:
-
-1. **Grants.gov** — the single largest repository of US federal grants, covering 26 agencies
-2. **SBIR.gov** — specifically for Small Business Innovation Research and Small Business Technology Transfer programs
-3. **Your state's economic development agency** — nearly every state runs its own grant and incentive programs
-4. **Startup India Portal** — for Indian startups, covers seed funds, tax exemptions, and fast-track IP
-
-Once you have a baseline understanding of what exists, use AI to accelerate the matching process.
-
-### Using AI for Grant Research
-
-The key to getting useful results from any LLM is *specificity*. Don't ask vague questions. Provide context about your company, stage, industry, and location.
-
-> "Find all government grants and subsidies available for early-stage technology startups in [your state/country], focusing on non-dilutive funding that doesn't require equity."
-
-This prompt works as a starting point, but you'll get better results by iterating. Feed the AI your company's specifics:
-
-- Annual revenue and employee count
-- Industry vertical and technology focus
-- Legal entity type and incorporation date
-- Prior funding history
-
-<aside class="callout">
-<strong>Tip:</strong>
-
-Most government grants have specific eligibility windows. Set up alerts for programs relevant to your industry so you don't miss deadlines. Tools like GrantWatch and Grants.gov allow email notifications for new opportunities.
-</aside>
-
----
-
-## Building Your Funding Stack
-
-The real power of non-dilutive capital isn't any single grant — it's **stacking** multiple sources. A well-constructed funding stack might look like this:
-
-- **Federal grants** (`SBIR` Phase I → Phase II) for R&D costs
-- **State-level incentives** for hiring and office space
-- **Tax credits** (R&D tax credit, angel investor credits)
-- **Revenue-based financing** for scaling once you have traction
-- **Competitions and accelerator prizes** for early validation
-
-The order matters. Some programs require you to *not* have received other federal funding. Others explicitly reward companies that have already secured government grants. Map out the dependencies before you apply.
-
-Here's a simple script to help you think about eligibility systematically:
-
-```python
-# Example: Simple grant eligibility checker
-def check_eligibility(company_stage, revenue, employee_count):
-    eligible_grants = []
-    if company_stage == "seed" and revenue < 500000:
-        eligible_grants.append("SBIR Phase I")
-    if employee_count < 500:
-        eligible_grants.append("SBA Microloans")
-    return eligible_grants
-```
-
-This is obviously a toy example, but the principle is real: **codify your eligibility criteria** so you can quickly filter thousands of programs down to the dozens that actually apply to you. Build a spreadsheet or a simple script, and update it as your company's profile changes.
-
----
-
-## Tools and Resources
-
-Below are the tools and references we recommend for founders beginning their non-dilutive funding research:
-
-1. **[Grants.gov](https://www.grants.gov/)** — US federal grant search and application portal
-2. **SBIR/STTR** — dedicated programs for small businesses doing R&D
-3. **GrantWatch** — aggregator covering federal, state, and private grants
-4. **Your accountant** — seriously, R&D tax credits alone can return 6-10% of qualifying expenses
-
-An unordered checklist for your first week of research:
-
-- Set up a Grants.gov account and configure saved searches
-- Identify your NAICS code (this determines eligibility for many programs)
-- Document your company's key metrics in a shared sheet
-- Run your first AI-assisted research session using the prompt above
-- Build a tracking spreadsheet with deadlines, requirements, and status
-
-The gap between "I should look into grants" and actually having money in your account is execution. Most founders stall at the research phase because it feels overwhelming. The methodology above — *databases first, AI-assisted matching second, systematic tracking third* — turns it into a manageable process.
-
-Non-dilutive capital won't replace venture funding for companies that need to scale fast. But for the **majority of startups**, the ones that need 12-18 months of runway to prove a thesis, it's the smarter first move.
+*Questions? hello@devalok.in*
