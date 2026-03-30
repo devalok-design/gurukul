@@ -1,0 +1,52 @@
+/* src/styles/global.css */
+
+/* Shilp Sutra design tokens — import individual files to avoid
+   typography.css which has broken relative font paths */
+@import '../../node_modules/@devalok/shilp-sutra/dist/tokens/primitives.css';
+@import '../../node_modules/@devalok/shilp-sutra/dist/tokens/semantic.css';
+@import '../../node_modules/@devalok/shilp-sutra/dist/tokens/typography-semantic.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Self-hosted Inter variable font */
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Italic-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@layer base {
+  html {
+    font-family: 'Inter', var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--color-surface-base);
+    color: var(--color-surface-fg);
+    line-height: var(--line-height-relaxed);
+  }
+
+  /* Override surface-base for Gurukul: warm white, not grey */
+  :root {
+    --color-surface-base: oklch(0.99 0.005 360);
+  }
+
+  ::selection {
+    background-color: var(--pink-3);
+    color: var(--pink-12);
+  }
+}
