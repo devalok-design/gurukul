@@ -4,7 +4,7 @@ import TableOfContents from '../components/TableOfContents.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
-  const guides = await getCollection('guides');
+  const guides = await getCollection('guides', ({ data }) => !data.draft);
   return guides.map((guide) => ({
     params: { slug: guide.id },
     props: { guide },

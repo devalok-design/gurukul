@@ -198,7 +198,8 @@
 .prose-gurukul .callout p:last-child {
   margin-bottom: 0;
 }
-.prose-gurukul .callout strong:first-child {
+.prose-gurukul .callout > p:first-child strong:first-child,
+.prose-gurukul .callout > strong:first-child {
   color: var(--color-accent-11);
   display: block;
   margin-bottom: var(--spacing-02);
