@@ -2,14 +2,18 @@
 
 /* Shilp Sutra design tokens — import individual files to avoid
    typography.css which has broken relative font paths */
+@import 'tailwindcss';
 @import '../../node_modules/@devalok/shilp-sutra/dist/tokens/primitives.css';
 @import '../../node_modules/@devalok/shilp-sutra/dist/tokens/semantic.css';
 @import '../../node_modules/@devalok/shilp-sutra/dist/tokens/typography-semantic.css';
 @import './prose.css';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Gurukul-local max-width tokens (moved from tailwind.config.cjs on the TW3→TW4
+   CSS-first migration). The --container-* namespace generates max-w-* utilities. */
+@theme {
+  --container-article: 720px;
+  --container-page: 1200px;
+}
 
 /* Self-hosted Inter variable font */
 @font-face {
@@ -38,7 +42,7 @@
   body {
     background-color: var(--color-surface-base);
     color: var(--color-surface-fg);
-    line-height: var(--line-height-relaxed);
+    line-height: var(--leading-ds-relaxed);
   }
 
   /* Override surface-base for Gurukul: warm white, not grey */
