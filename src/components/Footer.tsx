@@ -1,0 +1,34 @@
+export default function Footer() {
+  return (
+    <footer className="mt-ds-13 border-t border-surface-border-subtle">
+      <div className="max-w-page mx-auto px-ds-06 py-ds-10 flex flex-col sm:flex-row items-center justify-between gap-ds-04 text-ds-sm text-[rgb(140,128,132)]">
+        <p>
+          &copy; {new Date().getFullYear()}{" "}
+          <a
+            href="https://devalok.in"
+            className="text-[rgb(107,97,100)] hover:text-accent-11 transition-colors duration-fast-01 ease-productive-standard"
+          >
+            Devalok
+          </a>{" "}
+          · Lucknow · Phoenix
+        </p>
+        <div className="flex items-center gap-ds-05">
+          <a
+            href="https://dvlk.in/sankalan"
+            target="_blank"
+            rel="noopener"
+            className="hover:text-accent-11 transition-colors duration-fast-01 ease-productive-standard"
+          >
+            Sankalan
+          </a>
+          <a
+            href="/rss.xml"
+            className="hover:text-accent-11 transition-colors duration-fast-01 ease-productive-standard"
+          >
+            RSS
+          </a>
+        </div>
+      </div>
+    </footer>
+  );
+}

@@ -1,0 +1,60 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { alternatesFor, openGraphMetadata } from "@/lib/site";
+
+export const dynamic = "force-static";
+
+const DESCRIPTION =
+  "Gurukul is Devalok's open knowledge hub — practical guides for founders, designers, and builders.";
+
+export const metadata: Metadata = {
+  title: "About",
+  description: DESCRIPTION,
+  alternates: alternatesFor("/about"),
+  openGraph: openGraphMetadata({ type: "website", url: "/about" }),
+};
+
+export default function AboutPage() {
+  return (
+    <div className="max-w-article mx-auto px-ds-06 pt-ds-13 pb-ds-13 stagger-children">
+      <Link
+        href="/"
+        className="inline-block text-ds-sm font-medium text-surface-fg-subtle uppercase tracking-ds-wide hover:text-accent-11 transition-colors duration-fast-01 ease-productive-standard"
+      >
+        &larr; Gurukul
+      </Link>
+
+      <h1 className="mt-ds-05 font-bold text-ds-4xl sm:text-ds-5xl text-surface-fg leading-ds-tight tracking-ds-tight">
+        गुरुकुल
+      </h1>
+
+      <p className="mt-ds-03 text-ds-xl text-surface-fg-muted leading-ds-relaxed">
+        The traditional place of learning, where knowledge passes directly from those who practice to those who seek.
+      </p>
+
+      <div className="mt-ds-10 h-[1px] bg-surface-border-subtle"></div>
+
+      <div className="mt-ds-10 space-y-ds-07 text-ds-lg leading-[1.8] text-surface-fg-muted">
+        <p>
+          Devalok&apos;s Gurukul is that space, made open. We publish what we know — about building brands, raising capital without dilution, designing systems that hold up, and the business of creative work.
+        </p>
+        <p>
+          We don&apos;t separate design from strategy, or craft from commerce. A designer who doesn&apos;t understand funding is incomplete. A founder who can&apos;t think in systems will build something fragile. Gurukul exists because these disciplines are one discipline.
+        </p>
+        <p>Everything here is free to read, share, and use.</p>
+      </div>
+
+      <div className="mt-ds-13 h-[1px] bg-surface-border-subtle"></div>
+
+      <p className="mt-ds-06 text-ds-md text-surface-fg-subtle">
+        Built and maintained by{" "}
+        <a
+          href="https://devalok.in"
+          className="text-accent-11 underline decoration-accent-5 underline-offset-2 hover:decoration-current transition-[color,text-decoration-color] duration-fast-01 ease-productive-standard hover:text-accent-12"
+        >
+          Devalok Design and Strategy Studio
+        </a>
+      </p>
+    </div>
+  );
+}

@@ -20,9 +20,9 @@
 /* ── Headings ── */
 
 .prose-gurukul h2 {
-  font-size: var(--font-size-2xl);
+  font-size: var(--text-ds-2xl);
   font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-snug);
+  line-height: var(--leading-ds-snug);
   letter-spacing: -0.015em;
   color: var(--color-surface-fg);
   margin-top: 3.5rem;
@@ -32,18 +32,18 @@
 }
 
 .prose-gurukul h3 {
-  font-size: var(--font-size-xl);
+  font-size: var(--text-ds-xl);
   font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-snug);
+  line-height: var(--leading-ds-snug);
   color: var(--color-surface-fg);
   margin-top: 2.5rem;
   margin-bottom: 1rem;
 }
 
 .prose-gurukul h4 {
-  font-size: var(--font-size-lg);
+  font-size: var(--text-ds-lg);
   font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-snug);
+  line-height: var(--leading-ds-snug);
   color: var(--color-surface-fg);
   margin-top: 2rem;
   margin-bottom: 0.75rem;
@@ -92,12 +92,12 @@
 .prose-gurukul blockquote {
   border-left: 3px solid var(--color-accent-9);
   background-color: var(--color-accent-2);
-  padding: var(--spacing-06) var(--spacing-07);
+  padding: var(--spacing-ds-06) var(--spacing-ds-07);
   margin: 2rem 0;
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  border-radius: 0 var(--radius-ds-md) var(--radius-ds-md) 0;
 }
 .prose-gurukul blockquote p {
-  font-size: var(--font-size-base);
+  font-size: var(--text-ds-base);
   line-height: 1.7;
   color: var(--color-surface-fg-muted);
   margin-bottom: 0;
@@ -142,7 +142,7 @@
   background-color: var(--color-accent-2);
   color: var(--color-accent-11);
   border: 1px solid var(--color-accent-5);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-ds-sm);
   padding: 0.1em 0.4em;
 }
 
@@ -150,11 +150,11 @@
 
 .prose-gurukul pre {
   font-family: var(--font-mono);
-  font-size: var(--font-size-sm);
-  line-height: var(--line-height-relaxed);
-  border-radius: var(--radius-lg);
+  font-size: var(--text-ds-sm);
+  line-height: var(--leading-ds-relaxed);
+  border-radius: var(--radius-ds-lg);
   border: 1px solid var(--color-surface-border-strong);
-  padding: var(--spacing-06);
+  padding: var(--spacing-ds-06);
   margin: 2rem 0;
   overflow-x: auto;
 }
@@ -186,7 +186,7 @@
 .prose-gurukul img {
   max-width: 100%;
   height: auto;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-ds-lg);
   border: 1px solid var(--color-surface-border);
   margin: 2rem 0;
 }
@@ -197,16 +197,16 @@
   width: 100%;
   border-collapse: collapse;
   margin: 2rem 0;
-  font-size: var(--font-size-base);
+  font-size: var(--text-ds-base);
 }
 .prose-gurukul th {
   font-weight: var(--font-weight-semibold);
   text-align: left;
-  padding: var(--spacing-03) var(--spacing-04);
+  padding: var(--spacing-ds-03) var(--spacing-ds-04);
   border-bottom: 2px solid var(--color-surface-border-strong);
 }
 .prose-gurukul td {
-  padding: var(--spacing-03) var(--spacing-04);
+  padding: var(--spacing-ds-03) var(--spacing-ds-04);
   border-bottom: 1px solid var(--color-surface-border-subtle);
 }
 
@@ -215,8 +215,8 @@
 .prose-gurukul .callout {
   border-left: 3px solid var(--color-accent-9);
   background-color: var(--color-accent-2);
-  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
-  padding: var(--spacing-06) var(--spacing-07);
+  border-radius: 0 var(--radius-ds-lg) var(--radius-ds-lg) 0;
+  padding: var(--spacing-ds-06) var(--spacing-ds-07);
   margin: 2rem 0;
 }
 .prose-gurukul .callout p:last-child {
@@ -226,8 +226,8 @@
 .prose-gurukul .callout > strong:first-child {
   color: var(--color-accent-11);
   display: block;
-  margin-bottom: var(--spacing-02b);
-  font-size: var(--font-size-md);
+  margin-bottom: var(--spacing-ds-02b);
+  font-size: var(--text-ds-md);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -242,5 +242,5 @@
 /* ── Smooth scroll for ToC links ── */
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: var(--spacing-08);
+  scroll-padding-top: var(--spacing-ds-08);
 }
