@@ -7,6 +7,9 @@ import { getAllGuides, getGuide } from "@/lib/guides";
 import { OG_DEFAULT_IMAGE, TWITTER_METADATA, alternatesFor, openGraphMetadata } from "@/lib/site";
 
 export const dynamic = "force-static";
+// Only the guides from generateStaticParams exist; any other slug hard-404s
+// (no on-demand render → no soft-404 200s for bogus URLs). Matches Astro's getStaticPaths.
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return getAllGuides()

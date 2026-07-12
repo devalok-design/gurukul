@@ -14,11 +14,11 @@ Next.js content site (`gurukul.devalok.in`). Content-first: guides, articles, RS
 ## Commands
 
 ```bash
-npm install      # legacy-peer-deps=true via .npmrc (DS peer deps)
+npm install      # clean install (DS required peers are explicit deps; no legacy-peer-deps)
 npm run dev      # next dev
 npm run build    # next build (SSG)
 npm start        # next start
-npm run lint     # next lint
+npm run lint     # eslint . (Next 16.2 removed the `next lint` subcommand)
 ```
 
 There is no test suite. Verify changes with `npm run build` (ground truth) + `npx tsc --noEmit`.
@@ -47,4 +47,4 @@ TW4 silently drops utility classes whose backing token was renamed. When bumping
 
 ## Deploy
 
-**Railway** (Railpack auto-detects Next: `next build` / `next start`). Repoint `gurukul.devalok.in` DNS to the Railway service. `.npmrc` keeps `legacy-peer-deps=true`. (Previously Vercel + GitHub Pages — both removed on the Next port.)
+**Railway** (Railpack auto-detects Next: `next build` / `next start`). Already deployed — `gurukul.devalok.in` is a live custom domain on the Railway `gurukul` service; merging the Next port to `main` redeploys it (no DNS change). DS required peers (framer-motion, @tabler/icons-react) are explicit deps so `npm ci` installs the Linux `lightningcss` binary — do NOT reintroduce `legacy-peer-deps` (it makes npm skip platform-optional binaries and breaks the Railway build). (Previously Vercel + GitHub Pages — both removed on the Next port.)
