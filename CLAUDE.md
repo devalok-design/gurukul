@@ -1,40 +1,50 @@
 # gurukul — Devalok's founder-education site
 
-Astro static site (`gurukul.devalok.in`). Content-first: guides, articles, RSS, sitemap.
+Next.js content site (`gurukul.devalok.in`). Content-first: guides, articles, RSS, sitemap. Ported from Astro to Next.js App Router (2026-07) to standardize on the studio-wide stack.
 
 ## Stack
 
-- **Astro 6** (static output), no React island usage.
-- **Tailwind 4** (CSS-first) via the `@tailwindcss/vite` plugin — configured in `astro.config.mjs` under `vite.plugins`, NOT the old `@astrojs/tailwind` integration.
-- **@devalok/shilp-sutra** consumed as a **design-token source only** — no React components. gurukul uses the DS's OKLCH tokens + utility classes (`text-surface-*`, `text-ds-*`, `bg-accent-*`, `rounded-ds-*`, `hover:shadow-brand`, `duration-*`/`ease-*` motion).
+- **Next.js 16** (App Router) · **React 19** · **TypeScript strict**, ESM (`"type": "module"`).
+- **Render mode: standard Next** (`next start`), all pages statically pre-rendered (SSG via `export const dynamic = "force-static"` + `generateStaticParams`). No `output: "export"`.
+- **Tailwind 4** (CSS-first) via `@tailwindcss/postcss` — no `tailwind.config`, no JS preset. All CSS lives in `src/app/globals.css` (+ `src/app/prose.css`).
+- **@devalok/shilp-sutra** consumed as a **design-token source only** — no React components. gurukul uses the DS's OKLCH tokens + utility classes (`text-surface-*`, `text-ds-*`, `bg-accent-*`, `rounded-ds-*`, `hover:shadow-brand`, `duration-*`/`ease-*` motion). In `transpilePackages`.
+- **Fonts:** self-hosted Inter via `next/font/local` (`public/fonts/Inter-Variable.woff2` + italic). Exposed as `--font-inter`, wired into `--font-sans` in `globals.css`. Privacy/sovereignty — do NOT switch to `next/font/google`.
+- Light-mode only (`color-scheme: light`, warm-white surface). No dark mode.
 
 ## Commands
 
 ```bash
-npm run dev      # astro dev
-npm run build    # astro build -> dist/ (static)
-npm run preview  # astro preview
+npm install      # clean install (DS required peers are explicit deps; no legacy-peer-deps)
+npm run dev      # next dev
+npm run build    # next build (SSG)
+npm start        # next start
+npm run lint     # eslint . (Next 16.2 removed the `next lint` subcommand)
 ```
 
-## Tailwind 4 + shilp-sutra setup (IMPORTANT)
+There is no test suite. Verify changes with `npm run build` (ground truth) + `npx tsc --noEmit`.
 
-There is **no `tailwind.config.cjs`** and **no JS preset** — shilp-sutra dropped the JS preset in 0.37; it's TW4 CSS-first now. Everything lives in `src/styles/global.css`, imported once from `src/layouts/BaseLayout.astro`:
+## Content pipeline (`src/lib/guides.ts`)
 
-```css
-@import 'tailwindcss';
-@import '../../node_modules/@devalok/shilp-sutra/dist/tokens/primitives.css';
-@import '../../node_modules/@devalok/shilp-sutra/dist/tokens/semantic.css';
-@import '../../node_modules/@devalok/shilp-sutra/dist/tokens/typography-semantic.css';
-```
+Filesystem markdown + `unified` (remark/rehype) + `zod` frontmatter — no content-framework dep. Runs entirely at build time (RSC).
 
-- We import the **three individual DS token files** rather than `@devalok/shilp-sutra/css` — deliberately, to skip `typography.css` (its `@font-face` uses relative font paths into the tarball). gurukul **self-hosts Inter** via its own `@font-face` in `global.css`.
-- `semantic.css` / `typography-semantic.css` carry `@theme` blocks, so TW4 generates the DS utility classes from them. `primitives.css` is `:root` vars only.
-- Custom `max-w-article` / `max-w-page` utilities come from `@theme { --container-article/--container-page }` in `global.css` (the `--container-*` namespace generates `max-w-*`). These were `theme.extend.maxWidth` in the old TW3 config.
+- Reads `src/content/guides/*.md`; `slug` = filename without `.md` (ROOT-level route `/{slug}`, NOT `/guides/{slug}`).
+- Frontmatter parsed with `gray-matter`, validated with a zod schema (ported from the old `src/content.config.ts`).
+- Markdown → HTML via `remark-parse → remark-gfm → remark-rehype → rehype-slug → rehype-autolink-headings (append, empty content) → rehype-pretty-code (github-dark) → rehype-stringify`.
+- TOC headings (depth 2 & 3) are read back from the rendered hast tree (their rehype-slug `id`), so `#anchor` links always match heading ids exactly.
+- `getAllGuides()` (all guides, date desc — callers filter `draft`), `getGuide(slug)` → `{ data, html, headings }`.
+
+## Design tokens + shilp-sutra (IMPORTANT)
+
+`globals.css` imports the **standard DS bundle**: `@import "@devalok/shilp-sutra/css";` (this replaced the old individual-token-file workaround from the Astro build). Custom `max-w-article` / `max-w-page` come from `@theme { --container-article/--container-page }` (the `--container-*` namespace generates `max-w-*`).
 
 ### Upgrading shilp-sutra
 
-When bumping the DS, verify **every DS utility class the site uses still emits** in `dist/_astro/*.css` after `npm run build` — TW4 silently drops classes whose backing token was renamed. Token renames bite here because we consume tokens directly. Known past rename: `--line-height-relaxed` → `--leading-ds-relaxed` (0.29→0.45). Use the shilp-sutra MCP (`https://shilp-sutra.devalok.in/mcp`, `upgrade(from,to)`) or `node_modules/@devalok/shilp-sutra/BREAKING.json` to find renames.
+TW4 silently drops utility classes whose backing token was renamed. When bumping the DS, verify every DS utility the site uses still emits, and check `prose.css` (which references DS tokens directly via `var()`). Use the shilp-sutra MCP (`get_tokens`/`upgrade`, pass the installed version) or `node_modules/@devalok/shilp-sutra/BREAKING.json` to find renames. Known renames (fixed on the Next port): `--font-size-*` → `--text-ds-*`, `--spacing-NN` → `--spacing-ds-NN`, `--radius-{sm,md,lg}` → `--radius-ds-*`, `--line-height-*` → `--leading-ds-*`.
+
+## Routes
+
+`/` (home), `/about`, `/{slug}` (guide), `/rss.xml` (route handler), `/sitemap.xml` (`sitemap.ts`), 404 (`not-found.tsx`). `trailingSlash` is Next default (false). Full SEO parity: Metadata API (title/OG/Twitter/canonical/RSS alternate/icons) + JSON-LD Article on guide pages. GA (`G-6HETDZ47R1`) loaded via `next/script`; custom GA events in the client `Analytics` component.
 
 ## Deploy
 
-Currently Vercel (`vercel.json`), auto-deploy on push to `main`. **Migrating to Railway** — DNS cutover for `gurukul.devalok.in` pending.
+**Railway** (Railpack auto-detects Next: `next build` / `next start`). Already deployed — `gurukul.devalok.in` is a live custom domain on the Railway `gurukul` service; merging the Next port to `main` redeploys it (no DNS change). DS required peers (framer-motion, @tabler/icons-react) are explicit deps so `npm ci` installs the Linux `lightningcss` binary — do NOT reintroduce `legacy-peer-deps` (it makes npm skip platform-optional binaries and breaks the Railway build). (Previously Vercel + GitHub Pages — both removed on the Next port.)

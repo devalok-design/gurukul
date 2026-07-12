@@ -1,12 +1,6 @@
-/* src/styles/global.css */
-
-/* Shilp Sutra design tokens — import individual files to avoid
-   typography.css which has broken relative font paths */
-@import 'tailwindcss';
-@import '../../node_modules/@devalok/shilp-sutra/dist/tokens/primitives.css';
-@import '../../node_modules/@devalok/shilp-sutra/dist/tokens/semantic.css';
-@import '../../node_modules/@devalok/shilp-sutra/dist/tokens/typography-semantic.css';
-@import './prose.css';
+@import "tailwindcss";
+@import "@devalok/shilp-sutra/css";
+@import "./prose.css";
 
 /* Gurukul-local max-width tokens (moved from tailwind.config.cjs on the TW3→TW4
    CSS-first migration). The --container-* namespace generates max-w-* utilities. */
@@ -15,25 +9,14 @@
   --container-page: 1200px;
 }
 
-/* Self-hosted Inter variable font */
-@font-face {
-  font-family: 'Inter';
-  src: url('/fonts/Inter-Variable.woff2') format('woff2');
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Inter';
-  src: url('/fonts/Inter-Italic-Variable.woff2') format('woff2');
-  font-weight: 100 900;
-  font-style: italic;
-  font-display: swap;
+/* Font comes from next/font/local (self-hosted Inter) — wire --font-inter into
+   the DS --font-sans. No @font-face here; next/font handles loading + preload. */
+:root {
+  --font-sans: var(--font-inter), system-ui, sans-serif;
 }
 
 @layer base {
   html {
-    font-family: 'Inter', var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -42,6 +25,7 @@
   body {
     background-color: var(--color-surface-base);
     color: var(--color-surface-fg);
+    font-family: var(--font-sans);
     line-height: var(--leading-ds-relaxed);
   }
 
