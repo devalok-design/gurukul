@@ -11,7 +11,7 @@
   "dependencies": {
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2",
-    "@devalok/shilp-sutra": "^0.45.1",
+    "@devalok/shilp-sutra": "^0.49.3",
     "@tailwindcss/vite": "^4.3.0",
     "astro": "^6.1.1",
     "tailwindcss": "^4.3.0"
