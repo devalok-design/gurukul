@@ -19,3 +19,7 @@ next-env.d.ts
 # typescript
 *.tsbuildinfo
 package-lock.json
+
+# astro / build output
+.astro/
+dist/

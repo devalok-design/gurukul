@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "shilp-sutra": {
+      "type": "http",
+      "url": "https://shilp-sutra.devalok.in/mcp"
+    }
+  }
+}
