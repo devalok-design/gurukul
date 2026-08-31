@@ -29,7 +29,10 @@
     line-height: var(--leading-ds-relaxed);
   }
 
-  /* Override surface-base for Gurukul: warm white, not grey */
+  /* Override surface-base for Gurukul: warm white. Was "not grey" — DS
+     surface-base was --neutral-2 (#f6f5f6) until 0.57.0 made it pure
+     --neutral-0 white. The override still stands, now for warmth rather
+     than to escape grey. */
   :root {
     --color-surface-base: oklch(0.99 0.005 360);
   }

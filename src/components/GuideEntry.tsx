@@ -51,7 +51,7 @@ export default function GuideEntry({ title, subtitle, description, date, readTim
             {tags.map((tag) => (
               <span
                 key={tag}
-                className="inline-block text-ds-sm font-medium text-surface-fg-subtle bg-surface-raised border border-surface-border-subtle rounded-ds-full px-ds-03 py-ds-01"
+                className="inline-block text-ds-sm font-medium text-surface-fg-subtle bg-surface-panel border border-surface-border-subtle rounded-ds-full px-ds-03 py-ds-01"
               >
                 {tag}
               </span>
