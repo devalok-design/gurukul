@@ -19,3 +19,8 @@ next-env.d.ts
 # typescript
 *.tsbuildinfo
 package-lock.json
+
+# Build output (Astro-era leftovers + Next). Untracked but not ignored before,
+# which let a `git add -A` sweep them into a commit once.
+dist/
+.astro/
