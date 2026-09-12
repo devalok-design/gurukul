@@ -9,14 +9,14 @@ export const SITE_DESCRIPTION =
 
 /** Default OG/Twitter image (Devalok monogram wordmark). */
 export const OG_DEFAULT_IMAGE =
-  "https://devalok-public-assets.s3.ap-south-1.amazonaws.com/brand/devalok/logos/monogram-wordmark-brand-1024.png";
+  "https://assets.devalok.in/brand/devalok/logos/monogram-wordmark-brand-1024.png";
 
 export const FAVICON_SVG =
-  "https://devalok-public-assets.s3.ap-south-1.amazonaws.com/brand/devalok/favicons/favicon.svg";
+  "https://assets.devalok.in/brand/devalok/favicons/favicon.svg";
 export const FAVICON_PNG =
-  "https://devalok-public-assets.s3.ap-south-1.amazonaws.com/brand/devalok/favicons/favicon.png";
+  "https://assets.devalok.in/brand/devalok/favicons/favicon.png";
 export const APPLE_TOUCH_ICON =
-  "https://devalok-public-assets.s3.ap-south-1.amazonaws.com/brand/devalok/favicons/apple-touch-icon.png";
+  "https://assets.devalok.in/brand/devalok/favicons/apple-touch-icon.png";
 
 /**
  * Complete Twitter card metadata. Next replaces (does not deep-merge) the
