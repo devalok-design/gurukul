@@ -13,7 +13,7 @@ export default function Header() {
           <ChakraSvg size={28} className="text-accent-9" />
           <span className="font-bold text-ds-xl text-surface-fg leading-none">गुरुकुल</span>
           <span className="font-medium text-ds-md text-surface-fg-subtle leading-none hidden sm:inline">Gurukul</span>
-          <span className="ml-ds-02 inline-flex items-center text-[10px] font-semibold uppercase tracking-ds-widest text-accent-9 bg-accent-2 border border-accent-5 rounded-ds-full px-ds-02b py-[1px] leading-none">Alpha</span>
+          <span className="ml-ds-02 inline-flex items-center text-ds-xs font-semibold uppercase tracking-ds-widest text-accent-9 bg-accent-2 border border-accent-5 rounded-pill px-ds-02b py-[1px] leading-none">Alpha</span>
         </Link>
         <Link
           href="/about"

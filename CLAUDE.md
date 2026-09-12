@@ -7,7 +7,10 @@ Next.js content site (`gurukul.devalok.in`). Content-first: guides, articles, RS
 - **Next.js 16** (App Router) · **React 19** · **TypeScript strict**, ESM (`"type": "module"`).
 - **Render mode: standard Next** (`next start`), all pages statically pre-rendered (SSG via `export const dynamic = "force-static"` + `generateStaticParams`). No `output: "export"`.
 - **Tailwind 4** (CSS-first) via `@tailwindcss/postcss` — no `tailwind.config`, no JS preset. All CSS lives in `src/app/globals.css` (+ `src/app/prose.css`).
-- **@devalok/shilp-sutra** consumed as a **design-token source only** — no React components. gurukul uses the DS's OKLCH tokens + utility classes (`text-surface-*`, `text-ds-*`, `bg-accent-*`, `rounded-ds-*`, `hover:shadow-brand`, `duration-*`/`ease-*` motion). In `transpilePackages`.
+- **@devalok/shilp-sutra** consumed as a **design-token source only** — no React components. gurukul uses the DS's OKLCH tokens + utility classes (`text-surface-*`, `text-ds-*`, `bg-accent-*`, the radius ROLES `rounded-pill`/`-control`/`-surface`, `hover:shadow-brand`, `duration-*`/`ease-*` motion). In `transpilePackages`.
+  - ⚠ **Radius is roles, not `rounded-ds-*`.** The `ds-` primitives are pinned to one value and ignore the DS's `[data-shape]` preset; the roles read the same px today (pill 9999, control 6, surface 10) and remap with it. Swapped 2026-09-13; it was pixel-identical.
+  - ⚠ **Type stays on the RAW `text-ds-*` scale here, not the `text-body-*`/`text-heading-*` variants.** That is the token-source-only model working as intended: the variants also set family, weight, leading and tracking, and this site has its own editorial ramp built on the raw sizes. Don't "upgrade" them wholesale.
+  - The DS lint rules run on `src/**` (see `eslint.config.mjs`) — token/TW4 hygiene only, since no components are consumed. That replaces the by-hand utility re-verification the upgrade note below asks for.
 - **Fonts:** self-hosted Inter via `next/font/local` (`public/fonts/Inter-Variable.woff2` + italic). Exposed as `--font-inter`, wired into `--font-sans` in `globals.css`. Privacy/sovereignty — do NOT switch to `next/font/google`.
 - Light-mode only (`color-scheme: light`, warm-white surface). No dark mode.
 

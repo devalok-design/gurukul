@@ -32,7 +32,7 @@ export default function AboutPage() {
         The traditional place of learning, where knowledge passes directly from those who practice to those who seek.
       </p>
 
-      <div className="mt-ds-10 h-[1px] bg-surface-border-subtle"></div>
+      <div className="mt-ds-10 h-px bg-surface-border-subtle"></div>
 
       <div className="mt-ds-10 space-y-ds-07 text-ds-lg leading-[1.8] text-surface-fg-muted">
         <p>
@@ -44,7 +44,7 @@ export default function AboutPage() {
         <p>Everything here is free to read, share, and use.</p>
       </div>
 
-      <div className="mt-ds-13 h-[1px] bg-surface-border-subtle"></div>
+      <div className="mt-ds-13 h-px bg-surface-border-subtle"></div>
 
       <p className="mt-ds-06 text-ds-md text-surface-fg-subtle">
         Built and maintained by{" "}
