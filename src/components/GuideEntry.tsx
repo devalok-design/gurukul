@@ -26,24 +26,26 @@ export default function GuideEntry({ title, subtitle, description, date, readTim
   return (
     <Link href={`/${slug}`} className="group block guide-entry-hover">
       <article className="py-ds-09 sm:py-ds-10 border-b border-surface-border-subtle transition-colors duration-moderate-01 ease-productive-standard group-hover:border-accent-5">
-        {/* Meta line: date + read time — above the title like an editorial publication */}
-        <p className="text-ds-sm font-medium text-surface-fg-subtle uppercase tracking-ds-wide">
-          {formattedDate}
-          <span className="mx-ds-03">/</span>
-          {readTime}
-        </p>
-
-        {/* Title */}
-        <h2 className="mt-ds-04 font-semibold text-ds-2xl sm:text-ds-3xl text-surface-fg leading-ds-tight tracking-ds-tight transition-colors duration-fast-02 ease-productive-standard group-hover:text-accent-11">
+        {/* Title — leads the card. Nothing sits above it: a label above a
+            heading is the eyebrow pattern (Setu §3.4), banned outright. */}
+        <h2 className="font-semibold text-ds-2xl sm:text-ds-3xl text-surface-fg leading-ds-tight tracking-ds-tight transition-colors duration-fast-02 ease-productive-standard group-hover:text-accent-11">
           {title}
         </h2>
 
-        {/* Subtitle / description */}
+        {/* Subtitle / description — hugs the title it belongs to */}
         {(subtitle || description) && (
           <p className="mt-ds-03 text-ds-lg text-surface-fg-muted leading-ds-relaxed max-w-[640px]">
             {subtitle || description}
           </p>
         )}
+
+        {/* Meta line: date + read time — card meta belongs below the name it
+            describes, in mixed case. */}
+        <p className="mt-ds-05 text-ds-sm font-medium text-surface-fg-subtle">
+          {formattedDate}
+          <span className="mx-ds-03">/</span>
+          {readTime}
+        </p>
 
         {/* Tags */}
         {tags && tags.length > 0 && (
