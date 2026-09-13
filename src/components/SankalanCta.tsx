@@ -13,7 +13,7 @@ export default function SankalanCta({ size = "default" }: Props) {
       target="_blank"
       rel="noopener"
       className={[
-        "group block rounded-ds-lg bg-accent-2 border border-accent-5 transition-[border-color,box-shadow] duration-fast-02 ease-productive-standard hover:border-accent-7 hover:shadow-brand",
+        "group block rounded-surface bg-accent-2 border border-accent-5 transition-[border-color,box-shadow] duration-fast-02 ease-productive-standard hover:border-accent-7 hover:shadow-brand",
         size === "sm" ? "px-ds-05 py-ds-04" : "px-ds-06 py-ds-06",
       ].join(" ")}
     >

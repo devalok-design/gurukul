@@ -124,7 +124,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
               {data.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="inline-block text-ds-sm font-medium text-surface-fg-subtle bg-surface-panel border border-surface-border-subtle rounded-ds-full px-ds-03 py-ds-01"
+                  className="inline-block text-ds-sm font-medium text-surface-fg-subtle bg-surface-panel border border-surface-border-subtle rounded-pill px-ds-03 py-ds-01"
                 >
                   {tag}
                 </span>
@@ -137,7 +137,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
         <div className="pt-ds-10">
           {/* Mobile ToC */}
           {tocHeadings.length > 0 && (
-            <details className="xl:hidden mb-ds-10 max-w-article border border-surface-border-subtle rounded-ds-md">
+            <details className="xl:hidden mb-ds-10 max-w-article border border-surface-border-subtle rounded-control">
               <summary className="cursor-pointer px-ds-05 py-ds-04 text-ds-sm font-semibold text-surface-fg-subtle select-none uppercase tracking-ds-wide">
                 Contents
               </summary>
