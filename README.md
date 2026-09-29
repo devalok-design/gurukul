@@ -11,7 +11,7 @@ npm install
 npm run dev
 ```
 
-Opens at http://localhost:4321
+Opens at http://localhost:3000
 
 ## Add a New Guide
 
@@ -34,23 +34,23 @@ draft: false
 
 3. Write your content in markdown
 4. Use `<aside class="callout"><strong>Tip:</strong> Your content</aside>` for callout boxes
-5. Commit and push — Vercel deploys automatically
+5. Commit and push — Railway deploys automatically
 
 ## Deploy
 
-Configured for Vercel. Push to `main` to deploy.
+Railway (Railpack auto-detects Next). Push to `main` to deploy.
 
 ```bash
-npm run build    # generates static site in dist/
-npm run preview  # preview the build locally
+npm run build    # next build — output in .next/
+npm start        # serve the build locally
 ```
 
 ## Tech Stack
 
-- [Astro](https://astro.build) — static site generator
+- [Next.js 16](https://nextjs.org) — App Router, all pages statically pre-rendered
 - [Tailwind CSS](https://tailwindcss.com) — utility-first CSS
-- [@devalok/shilp-sutra](https://www.npmjs.com/package/@devalok/shilp-sutra) — Devalok design tokens and Tailwind preset
-- [Shiki](https://shiki.style) — syntax highlighting (built into Astro)
+- [@devalok/shilp-sutra](https://www.npmjs.com/package/@devalok/shilp-sutra) — Devalok design tokens (token source only, no JS preset)
+- [rehype-pretty-code](https://www.npmjs.com/package/rehype-pretty-code) — syntax highlighting (Shiki engine)
 
 ## Brand
 
