@@ -1,0 +1,156 @@
+# Lockfile factory - regenerate a lockfile on Linux and commit it back to the branch.
+#
+# WHY THIS EXISTS. A lockfile written by `npm install` on Windows omits the
+# Linux-only optional platform packages the deploy image needs. npm prunes
+# `optionalDependencies` to the installing host; pnpm records every platform,
+# which is why pnpm repos never hit this and npm repos do.
+#
+# On 2026-09-30 that took a service down: devalok-yojana merged a Windows
+# generated package-lock.json missing @emnapi/core and @emnapi/runtime. Every
+# local check passed. The Docker build's `npm ci` then failed:
+#
+#     npm error Missing: @emnapi/runtime@1.11.3 from lock file
+#     npm error Missing: @emnapi/core@1.11.3 from lock file
+#
+# yojana-app went SUCCESS -> FAILED, and five recovery routes all failed to
+# produce a passing lockfile from Windows: npm install, --package-lock-only,
+# npm's --os/--cpu/--libc overrides, Docker (daemon down) and WSL.
+#
+# It is also why gurukul and patra deleted their lockfiles in July rather than
+# keep fighting it. That dodged the prune at the cost of reproducible builds -
+# every deploy re-resolved from scratch. This workflow removes the trade: the
+# lockfile is generated on the same platform that runs it, so it is both
+# correct and reproducible.
+#
+# HOW THE LANE USES IT. The agent edits the manifest on a branch, pushes, then:
+#     gh workflow run lockfile-refresh.yml --ref <branch> -f package_dir=.
+# and waits for the run. The lockfile comes back as a commit on that branch.
+# The box never resolves a dependency tree.
+#
+# SAFETY. It refuses to run against the default branch, and it only ever
+# commits lockfiles - never a manifest, never source.
+
+name: lockfile-refresh
+
+on:
+  workflow_dispatch:
+    inputs:
+      package_dir:
+        description: 'Directory holding package.json (repo root is ".")'
+        required: false
+        default: '.'
+      node_version:
+        description: 'Node major to resolve against; blank reads .nvmrc, else 22'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Refuse to run on the default branch
+        run: |
+          if [ "${GITHUB_REF_NAME}" = "${{ github.event.repository.default_branch }}" ]; then
+            echo "::error::lockfile-refresh runs on a PR branch, never on ${GITHUB_REF_NAME}."
+            exit 1
+          fi
+
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          # A token that can push back to the branch. The default GITHUB_TOKEN
+          # is enough because `permissions: contents: write` is set above.
+          persist-credentials: true
+
+      - name: Resolve Node version
+        id: node
+        working-directory: ${{ inputs.package_dir }}
+        run: |
+          v="${{ inputs.node_version }}"
+          if [ -z "$v" ] && [ -f .nvmrc ]; then v="$(tr -d 'v \r\n' < .nvmrc)"; fi
+          if [ -z "$v" ]; then v="22"; fi
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+          echo "resolving against Node $v"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ steps.node.outputs.version }}
+
+      # Detect from the lockfile that is present, falling back to the
+      # packageManager field. Detecting from the manifest alone is wrong: a repo
+      # can declare packageManager and still ship a different lockfile.
+      - name: Detect package manager
+        id: pm
+        working-directory: ${{ inputs.package_dir }}
+        run: |
+          if   [ -f pnpm-lock.yaml ];     then pm=pnpm
+          elif [ -f bun.lock ] || [ -f bun.lockb ]; then pm=bun
+          elif [ -f package-lock.json ];  then pm=npm
+          else
+            case "$(node -p "try{require('./package.json').packageManager||''}catch(e){''}")" in
+              pnpm*) pm=pnpm ;;
+              bun*)  pm=bun  ;;
+              *)     pm=npm  ;;
+            esac
+          fi
+          echo "pm=$pm" >> "$GITHUB_OUTPUT"
+          echo "package manager: $pm"
+
+      - name: Enable corepack for pnpm
+        if: steps.pm.outputs.pm == 'pnpm'
+        run: corepack enable
+
+      - uses: oven-sh/setup-bun@v2
+        if: steps.pm.outputs.pm == 'bun'
+
+      # --lockfile-only / --package-lock-only resolve the full tree without
+      # running install scripts, so no postinstall executes in this job.
+      - name: Regenerate the lockfile on Linux
+        working-directory: ${{ inputs.package_dir }}
+        run: |
+          case "${{ steps.pm.outputs.pm }}" in
+            npm)  npm install --package-lock-only --ignore-scripts ;;
+            pnpm) pnpm install --lockfile-only --ignore-scripts ;;
+            bun)  bun install --lockfile-only ;;
+          esac
+
+      # Prove the artifact rather than trusting the previous step's exit code.
+      # `npm ci --dry-run` is the exact check the Docker build performs, and it
+      # is the check that would have caught the yojana break before the merge.
+      - name: Verify the lockfile satisfies a clean install
+        working-directory: ${{ inputs.package_dir }}
+        run: |
+          case "${{ steps.pm.outputs.pm }}" in
+            npm)  npm ci --dry-run ;;
+            pnpm) pnpm install --frozen-lockfile --ignore-scripts ;;
+            bun)  bun install --frozen-lockfile ;;
+          esac
+
+      - name: Commit the lockfile back, if it changed
+        working-directory: ${{ inputs.package_dir }}
+        run: |
+          git config user.name  "devalok-lockfile-factory[bot]"
+          git config user.email "noreply@devalok.in"
+          # Only lockfiles. Never a manifest, never source. Added one at a time:
+          # a single `git add` naming a file that does not exist fails the whole
+          # call and stages nothing, so a combined add never commits anything.
+          for f in package-lock.json pnpm-lock.yaml bun.lock bun.lockb; do
+            [ -f "$f" ] || continue
+            # A gitignored lockfile (gurukul, patra dropped theirs in July) would
+            # be refused by `git add`. Fail loudly rather than report "nothing
+            # to commit" - un-ignore it on the branch first.
+            if git check-ignore -q -- "$f"; then
+              echo "::error::$f is gitignored here. Remove it from .gitignore on this branch, then re-run."
+              exit 1
+            fi
+            git add -- "$f"
+          done
+          if git diff --cached --quiet; then
+            echo "lockfile already correct for linux-x64 - nothing to commit"
+            exit 0
+          fi
+          git commit -m "chore: regenerate lockfile on ubuntu-latest" -m "Generated by the lockfile factory so the tree matches the deploy platform. A lockfile written on Windows omits Linux-only optional platform packages (@emnapi/* and friends) and fails npm ci inside the image."
+          git push origin HEAD:"${GITHUB_REF_NAME}"
