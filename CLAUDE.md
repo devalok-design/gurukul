@@ -55,8 +55,13 @@ moved, so **Cloudflare owns the DNS record**.
 Push to `main` deploys via `.github/workflows/deploy.yml` (build → `wrangler deploy` →
 assert the live hostname returns 200). Nothing deploys by hand.
 
-`package-lock.json` is **gitignored** (`.gitignore:21`), so CI runs `npm install`, not
-`npm ci`, and cannot cache on a lockfile. DS required peers (framer-motion,
+`package-lock.json` is **committed again** as of 2026-11-20, so CI runs `npm ci` and
+deploys are reproducible. It was deleted in July 2026 to dodge npm pruning
+`optionalDependencies` to the installing host — a Windows-written lockfile omits the
+Linux-only platform packages the build needs, which took `yojana-app` down on
+2026-09-30. **Never regenerate it on Windows**; dispatch
+`.github/workflows/lockfile-refresh.yml`, which resolves on ubuntu-latest and commits
+the result back to your branch. DS required peers (framer-motion,
 @tabler/icons-react) are explicit deps so the Linux `lightningcss` binary installs — do
 NOT reintroduce `legacy-peer-deps`, which makes npm skip platform-optional binaries and
 breaks the build.
