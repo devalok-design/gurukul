@@ -24,3 +24,4 @@ package-lock.json
 # which let a `git add -A` sweep them into a commit once.
 dist/
 .astro/
+.wrangler/

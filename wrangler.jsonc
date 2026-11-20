@@ -1,0 +1,21 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "gurukul",
+	"compatibility_date": "2026-10-01",
+
+	// Keep the workers.dev URL alive alongside the route. Declaring routes
+	// without this silently disables it and takes the site down.
+	"workers_dev": true,
+
+	// Assets-only Worker: no `main`, so Cloudflare serves ./out directly.
+	// Next's static export writes 404.html; _headers carries the security
+	// headers that next.config's headers() cannot apply in export mode.
+	"assets": {
+		"directory": "./out",
+		"not_found_handling": "404-page"
+	},
+
+	// The stale Railway CNAME on this hostname was deleted, so Cloudflare
+	// now owns the record and manages it as a real custom domain.
+	"routes": [{ "pattern": "gurukul.devalok.in", "custom_domain": true }]
+}
