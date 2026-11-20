@@ -5,7 +5,7 @@ Next.js content site (`gurukul.devalok.in`). Content-first: guides, articles, RS
 ## Stack
 
 - **Next.js 16** (App Router) · **React 19** · **TypeScript strict**, ESM (`"type": "module"`).
-- **Render mode: standard Next** (`next start`), all pages statically pre-rendered (SSG via `export const dynamic = "force-static"` + `generateStaticParams`). No `output: "export"`.
+- **Render mode: static export** (`output: "export"` in `next.config.ts`) — all pages were already prerendered (SSG via `export const dynamic = "force-static"` + `generateStaticParams`), so the export is a lossless change. `next build` writes `./out`, which Cloudflare serves directly. **`headers()` has no effect in export mode** — security headers live in `public/_headers`.
 - **Tailwind 4** (CSS-first) via `@tailwindcss/postcss` — no `tailwind.config`, no JS preset. All CSS lives in `src/app/globals.css` (+ `src/app/prose.css`).
 - **@devalok/shilp-sutra** consumed as a **design-token source only** — no React components. gurukul uses the DS's OKLCH tokens + utility classes (`text-surface-*`, `text-ds-*`, `bg-accent-*`, `rounded-ds-*`, `hover:shadow-brand`, `duration-*`/`ease-*` motion). In `transpilePackages`.
 - **Fonts:** self-hosted Inter via `next/font/local` (`public/fonts/Inter-Variable.woff2` + italic). Exposed as `--font-inter`, wired into `--font-sans` in `globals.css`. Privacy/sovereignty — do NOT switch to `next/font/google`.
@@ -47,4 +47,24 @@ TW4 silently drops utility classes whose backing token was renamed. When bumping
 
 ## Deploy
 
-**Railway** (Railpack auto-detects Next: `next build` / `next start`). Already deployed — `gurukul.devalok.in` is a live custom domain on the Railway `gurukul` service; merging the Next port to `main` redeploys it (no DNS change). DS required peers (framer-motion, @tabler/icons-react) are explicit deps so `npm ci` installs the Linux `lightningcss` binary — do NOT reintroduce `legacy-peer-deps` (it makes npm skip platform-optional binaries and breaks the Railway build). (Previously Vercel + GitHub Pages — both removed on the Next port.)
+**Cloudflare Workers.** `gurukul.devalok.in` is a Cloudflare custom domain on the
+`gurukul` Worker — an assets-only Worker (no `main`) serving `./out`, declared in
+`wrangler.jsonc`. The stale Railway CNAME on that hostname was deleted when the site
+moved, so **Cloudflare owns the DNS record**.
+
+Push to `main` deploys via `.github/workflows/deploy.yml` (build → `wrangler deploy` →
+assert the live hostname returns 200). Nothing deploys by hand.
+
+`package-lock.json` is **committed again** as of 2026-11-20, so CI runs `npm ci` and
+deploys are reproducible. It was deleted in July 2026 to dodge npm pruning
+`optionalDependencies` to the installing host — a Windows-written lockfile omits the
+Linux-only platform packages the build needs, which took `yojana-app` down on
+2026-09-30. **Never regenerate it on Windows**; dispatch
+`.github/workflows/lockfile-refresh.yml`, which resolves on ubuntu-latest and commits
+the result back to your branch. DS required peers (framer-motion,
+@tabler/icons-react) are explicit deps so the Linux `lightningcss` binary installs — do
+NOT reintroduce `legacy-peer-deps`, which makes npm skip platform-optional binaries and
+breaks the build.
+
+(Previously Railway, and before that Vercel + GitHub Pages. The Railway service was a
+redundant second copy of this site after the Cloudflare move and has been retired.)

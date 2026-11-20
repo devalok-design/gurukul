@@ -18,9 +18,17 @@ next-env.d.ts
 
 # typescript
 *.tsbuildinfo
-package-lock.json
+
+# package-lock.json is COMMITTED again as of 2026-11-20. It was deleted in
+# July 2026 to dodge npm pruning optionalDependencies to the installing host -
+# a Windows-generated lockfile omits the Linux-only platform packages the
+# build needs, which took yojana-app down on 2026-09-30. That trade cost
+# reproducible builds: every deploy re-resolved from scratch.
+# .github/workflows/lockfile-refresh.yml removes the trade by generating the
+# lockfile on ubuntu-latest. Never regenerate it on Windows.
 
 # Build output (Astro-era leftovers + Next). Untracked but not ignored before,
 # which let a `git add -A` sweep them into a commit once.
 dist/
 .astro/
+.wrangler/

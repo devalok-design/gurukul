@@ -1,0 +1,84 @@
+name: Deploy to Cloudflare Workers
+
+# gurukul.devalok.in is served by Cloudflare Workers, not Railway. Until now the
+# only deploy path was running `wrangler deploy` by hand, so the live site drifted
+# behind main while a redundant Railway copy rebuilt on every push. The Railway
+# copy is being retired; this workflow replaces it.
+
+on:
+  push:
+    branches: [main]
+    # Docs-only changes do not alter the exported site.
+    paths-ignore:
+      - 'docs/**'
+      - '**/*.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# GitHub bills every JOB rounded up to a whole minute, so a superseded run is
+# not free. Cancel in-progress deploys when a newer commit lands.
+concurrency:
+  group: deploy-gurukul
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # `npm ci`, from a lockfile generated on ubuntu-latest by
+      # .github/workflows/lockfile-refresh.yml. Deploys are reproducible: the same
+      # commit resolves to the same tree every time.
+      #
+      # Do NOT regenerate this lockfile on Windows. npm prunes
+      # optionalDependencies to the installing host, so a Windows-written lockfile
+      # omits the Linux-only platform packages this runner needs — that took
+      # yojana-app down on 2026-09-30. pnpm records every platform, which is why
+      # only npm repos hit this. Dispatch lockfile-refresh instead.
+      #
+      # Do NOT add --legacy-peer-deps either: it makes npm skip platform-optional
+      # binaries, dropping the Linux lightningcss build.
+      - name: Install dependencies
+        run: npm ci
+
+      # next.config.ts sets `output: "export"`, so this writes a static site to
+      # ./out — which is exactly what wrangler.jsonc serves as an assets-only
+      # Worker (no `main`). @devalok/shilp-sutra resolves from the public npm
+      # registry, so no NPM_TOKEN is needed here.
+      - name: Build static export
+        run: npm run build
+
+      - name: Verify export produced output
+        run: |
+          test -d out || { echo "::error::next build produced no ./out directory"; exit 1; }
+          test -f out/index.html || { echo "::error::./out has no index.html"; exit 1; }
+          echo "out/ contains $(find out -type f | wc -l) files"
+
+      # wrangler is deliberately NOT a dependency of this repo. Adding it would
+      # mean regenerating package-lock.json on Windows, which drops Linux-only
+      # optional deps and breaks `npm ci` on this runner. Pinned via npx instead.
+      - name: Deploy to Cloudflare Workers
+        run: npx --yes wrangler@4.157.0 deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      # A green deploy step is not proof the site is serving. Check the real
+      # hostname, and check it is Cloudflare answering rather than a stale origin.
+      - name: Verify the live site
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 https://gurukul.devalok.in)
+          echo "gurukul.devalok.in -> $code"
+          test "$code" = "200" || { echo "::error::live site returned $code"; exit 1; }
